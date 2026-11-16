@@ -11,15 +11,15 @@
 <body>
 
   <header class="topbar">
-    <a class="brand" href="index.html">Langelihle Malaza</a>
+    <a class="brand" href="home">Langelihle Malaza</a>
     <button id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
     <nav id="main-nav">
-      <a href="index.html">Home</a>
-      <a href="research.html">Research</a>
-      <a href="projects.html">Projects</a>
-      <a href="skills.html">Skills</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="home">Home</a>
+      <a href="research">Research</a>
+      <a href="projects">Projects</a>
+      <a href="skills">Skills</a>
+      <a href="about">About</a>
+      <a href="contact">Contact</a>
     </nav>
   </header>
 
@@ -79,15 +79,15 @@
       </p>
       <p class="muted" style="margin-top:.6rem">
         Brief summaries of related work can be found on the
-        <a href="research.html#access-analysis">Business Analysis for ACCESS</a> and
-        <a href="research.html#itsl">ITSL Group Project</a> entries on the Research page.
+        <a href="research#access-analysis">Business Analysis for ACCESS</a> and
+        <a href="research#itsl">ITSL Group Project</a> entries on the Research page.
       </p>
     </div>
 
     <div class="card fade-up fade-up-4">
       <p class="muted">
         More public projects will be added over time. For private demos or collaboration,
-        <a href="contact.html">get in touch</a>.
+        <a href="contact">get in touch</a>.
       </p>
     </div>
 
@@ -99,9 +99,17 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
-    const path = location.pathname.split('/').pop() || 'index.html';
+
+    // Tidy the address bar if someone lands on a .html URL
+    if (location.pathname.endsWith('.html')) {
+      history.replaceState(null, '', location.pathname.replace(/\.html$/, '') + location.search + location.hash);
+    }
+
+    // Highlight the current page in the nav (works with or without .html)
+    let page = location.pathname.split('/').pop().replace(/\.html$/, '') || 'home';
+    if (page === 'index') page = 'home';
     document.querySelectorAll('#main-nav a').forEach(a => {
-      if (a.getAttribute('href') === path) a.classList.add('active');
+      if (a.getAttribute('href') === page) a.classList.add('active');
     });
     const toggle = document.getElementById('menu-toggle');
     const nav    = document.getElementById('main-nav');
